@@ -1,31 +1,30 @@
 function selectPkg(element, pkgName) {
-    // 1. CHECK IF USER IS LOGGED IN
+    // 1. CHECK LOGIN STATUS
     const isLoggedIn = localStorage.getItem("isLoggedIn");
 
-    if (!isLoggedIn) {
-        // 2. SHOW POP-UP IF NOT SIGNED UP
-        alert("First you have to register!");
+    if (isLoggedIn !== "true") {
+        // 2. TRIGGER POPUP IF NOT LOGGED IN
+        alert("Access Denied: Please sign in or register on the Home page first to book a package!");
         return; // Stop the function here
     }
 
     // 3. PROCEED IF LOGGED IN
     const priceText = element.querySelector(".pkg-price").innerText;
-    // Extract only the numbers (e.g., "$350/person" becomes "350")
-    const priceValue = priceText.replace(/[^0-9]/g, "");
+    const priceValue = priceText.replace(/[^0-9]/g, ""); // Get only the number
 
-    // Save selection to browser memory
+    // 4. SAVE SELECTION
     localStorage.setItem("selectedPackage", pkgName);
     localStorage.setItem("selectedPrice", priceValue);
 
-    // UI feedback (Toast)
+    // 5. SHOW FEEDBACK
     const toast = document.getElementById("toast");
     if (toast) {
-        toast.innerText = pkgName + " Package Selected";
+        toast.innerText = pkgName + " Selected!";
         toast.style.display = "block";
     }
 
-    // Redirect to payment page
+    // 6. REDIRECT
     setTimeout(() => {
-        window.location.href = "Payment.html"; // Ensure this matches your payment file name
+        window.location.href = "Payment.html"; 
     }, 800);
 }
